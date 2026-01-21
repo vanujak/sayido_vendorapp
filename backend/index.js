@@ -92,3 +92,40 @@ app.post('/api/login', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
+// ...existing code...
+
+app.post('/api/register', async (req, res) => {
+    const { fname, lname, email, password, location } = req.body;
+
+    if (!fname || !lname || !email || !password || !location) {
+        return res.status(400).json({ message: 'All fields are required' });
+    }
+
+    try {
+        // Check if user already exists
+        const userExists = await pool.query('SELECT * FROM vendor WHERE email = $1', [email]);
+        if (userExists.rows.length > 0) {
+            return res.status(409).json({ message: 'Email already registered' });
+        }
+
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Insert user
+        const result = await pool.query(
+            'INSERT INTO vendor (fname, lname, email, password, location) VALUES ($1, $2, $3, $4, $5) RETURNING id, fname, lname, email, location',
+            [fname, lname, email, hashedPassword, location]
+        );
+
+        res.status(201).json({
+            message: 'User registered successfully',
+            user: result.rows[0]
+        });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// ...existing code...
