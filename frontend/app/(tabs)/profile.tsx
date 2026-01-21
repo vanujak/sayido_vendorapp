@@ -13,7 +13,6 @@ export default function ProfileScreen() {
         <View style={styles.container}>
             <Text style={styles.title}>Profile Manager</Text>
             <Text style={styles.subtitle}>Update your vendor details</Text>
-
             <TouchableOpacity
                 style={styles.logoutButton}
                 activeOpacity={0.8}

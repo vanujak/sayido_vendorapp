@@ -4,6 +4,7 @@ import { useLocalSearchParams } from 'expo-router';
 export default function Dashboard() {
   const params = useLocalSearchParams();
   const { fname, lname, location } = params;
+  
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
