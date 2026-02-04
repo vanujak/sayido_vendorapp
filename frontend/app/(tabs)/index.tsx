@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, Platform, ScrollView } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
+import AnalyticsDashboard from '../../components/AnalyticsDashborad';
 
 export default function Dashboard() {
   const params = useLocalSearchParams();
@@ -25,9 +26,10 @@ export default function Dashboard() {
           <Text style={styles.label}>Status:</Text>
           <Text style={styles.activeStatus}>Active</Text>
         </View>
+        
       </View>
-
-      <Text style={styles.dashboardNote}>This is your simple vendor dashboard.</Text>
+        <AnalyticsDashboard />
+      
     </ScrollView>
   );
 }
@@ -36,7 +38,7 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 24,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: '#ffffff',
     paddingTop: Platform.OS === 'web' ? 60 : 80,
   },
   header: {
